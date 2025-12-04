@@ -113,30 +113,20 @@
 <body>
 	<div class="center-justified" style="width:1000px;"> 
 		<h1>Beyond Known Objects: Prompting 6D Pose Estimator to Learn Novel Objects Continually</h1>
-		<!--
-		<h3>Long Tian <sup>1 2</sup>, Amelia Sorrenti<sup>3</sup>, Yik Lung Pang<sup>2</sup>, Giovanni Bellitto<sup>3</sup>, Simone Palazzo<sup>3</sup>, Concetto Spampinato<sup>3</sup>, and Changjae Oh<sup>3</sup></h3>
-		<h3> <sup>1</sup> Southwest Jiaotong University, China </h3>
-		<h3> <sup>2</sup> Queen Mary University of London, United Kingdom </h3>
-		<h3> <sup>3</sup> University of Catania, Italy </h3>
-		-->
 	</div>
 	<div class="center-justified">
 		<p>
-				<b>ABSTRACT:</b> Robust 6D object pose estimation is essential for enabling intelligent
-			systems to interact with the physical world. While existing methods have achieved notable progress,
-			they remain constrained by two major limitations: poor scalability when new objects are introduced and
-			severe performance degradation caused by catastrophic forgetting in sequential learning settings.
-			To address these challenges, we propose a novel prompt-based continual learning framework for 6D pose
-			estimation. Our approach leverages frozen foundation features for robust appearance and geometric
-			representation, while introducing a multi-head pose predictor to isolate task-specific regressors and a
-			prompt pool that serves as a rehearsal-free knowledge repository. The proposed framework enables
-			task-agnostic inference by retrieving relevant prompts and activating the appropriate predictor without
-			requiring explicit task labels. We conduct comprehensive experiments on the Linemod and YCB-Video datasets
-			under task-incremental settings. Results show that our method achieves competitive performance compared
-			with state-of-the-art baselines, while exhibiting strong robustness to task order, adaptability to
-			arbitrary object groupings, and high scalability through lightweight predictor expansion. To the best of
-			our knowledge, this work represents the first systematic study of continual learning for 6D pose
-			estimation, providing a foundation toward scalable and adaptive open-world perception.
+				<b>ABSTRACT:</b> Robust 6D object pose estimation is essential for enabling intelligent systems to interact with the physical world. 
+				While existing methods have achieved notable progress, they remain constrained by two major limitations: poor scalability when new objects are 
+				introduced and severe performance degradation caused by catastrophic forgetting in sequential learning settings. To address these challenges, 
+				we propose a novel prompt-based continual learning framework for 6D pose estimation. Our approach leverages frozen foundation features for robust 
+				appearance and geometric representation, while introducing a Multi-head pose predictor to isolate task-specific regressors and a Prompt pool that 
+				serves as a rehearsal-free knowledge repository. The proposed framework enables task-agnostic inference by retrieving relevant prompts and activating 
+				the appropriate predictor without requiring explicit task labels. We conduct comprehensive experiments on the Linemod and YCB-Video datasets under 
+				various settings within task-incremental learning. Results show that our method achieves competitive performance, while exhibiting strong robustness 
+				to task order, adaptability to arbitrary object groupings, and high scalability through lightweight predictor expansion. To the best of our knowledge, 
+				this work represents the first systematic study of continual learning for 6D pose estimation, providing a foundation toward scalable and adaptive 
+				open-world perception.
         </p>
 		<br>
 		<br>
@@ -173,7 +163,12 @@
 		<img width=800 src="framework.png">
 	</div>
 		<p>
-			Our framework operates in two stages. In the first stage, an image and its corresponding point cloud are processed by vision and geometry foundation models, respectively. The extracted visual and geometric features are fused to form point-wise representations, which are then passed to a multi-head pose predictor to estimate the 6D pose. In the second stage, only the image is used as input. A subset of prompts is retrieved from a prompt pool via a cosine similarity-based selection mechanism and prepended to the patch embeddings. These enriched embeddings are fed into a classifier to determine the task identity, which in turn specifies the appropriate pose predictor to be employed during training and inference.
+			Framework. (a) During training, cropped image and masked point cloud from Task $i$ are fed into vision and geometry foundation models to extract 
+			features, which are fused into pixel-level representations and passed to a Multi-Head Pose Predictor for 6D pose regression. In parallel, 
+			the RGB image is used for task-identity inference: a subset of prompts is selected from a prompt pool via cosine similarity, combined with patch 
+			embeddings from a pre-trained encoder, and classified to produce the task ID, which determines the corresponding pose predictor. 
+			(2) During inference, the task-identity classifier takes the RGB image to predict the task ID, while the RGB-D features are extracted and routed to 
+			the selected pose predictor to estimate the 6D pose.
 		</p>
 		<br>
 		<br>
@@ -223,13 +218,6 @@
 	</div>
 
 
-<!--
-	<h2 style="text-align: left;">Contacts</h2>
-	<p>
-		If you have any further enquiries, question, or comments, please contact 
-		<a href="mailto:long.tian@qmul.ac.uk"><u>long.tian@swjtu.edu.cn</u></a>.
-	</p>
--->
 		</div>
 	<br>
 	<br>

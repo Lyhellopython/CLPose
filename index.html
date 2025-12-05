@@ -113,6 +113,11 @@
 <body>
 	<div class="center-justified" style="width:1000px;"> 
 		<h1>Beyond Known Objects: Prompting 6D Pose Estimator to Learn Novel Objects Continually</h1>
+		<h3>Long Tian <sup>1</sup>, Yang Liu<sup>1</sup>, Junlin Fang<sup>1</sup>, Lixin Duan<sup>2</sup>, Wen Li<sup>2</sup>, and Fengmao Lv<sup>1*</sup></h3>
+		<h3> <sup>1</sup> Southwest Jiaotong University, China </h3>
+		<h3> <sup>2</sup> University of Electronic Science and Technology of China</h3>
+		<h3> <sup>*</sup> Corresponding author </h3>
+
 	</div>
 	<div class="center-justified">
 		<p>
@@ -136,34 +141,12 @@
 <!--		<img width=1000 src="framework/framework.png">-->
 <!--	</div>-->
 
-	<h2 class="Motivation" style="text-align: left;">Motivation</h2>
-	<div style="text-align: center;">
-		<img width=600 src="motivation.png">
-	</div>
-		<p>
-			<b>Motivation:</b> We explore several model in the domain of 6Dof pose estimation on the Linemod dataset benchmark.This
-			figure shows that the state-of-art models can achieve an average accuracy rate of 99.7% on
-			the evaluation of ADD(S)-0.1d, and this performance is already very close to 100%. Therefore, there
-			is only a 0.3% space for improvement. It should be noted that these models with excellent performance
-			are usually the results obtained by training all objects in a single task on the entire dataset.
-			What if we adopt another perspective to view this issue and train object by object in a
-			streaming manner? Taking the Densefusion model as a comparison, the green line represents the result
-			of training on the whole objects, and the red line represents the result of streaming training object
-			by object. As we can see, when we train the tasks in a streaming manner instead of a
-			single task, the model only fits the current object perfectly, and there is catastrophic forgetting for the objects
-			trained previously, except for the object of glue, which is symmetric object. Mitigating this
-			catastrophic forgetting and filling this unexplored area are our main motivations. And it is the way to
-			achieve artificial general intelligence.
-		</p>
-		<br>
-		<br>
-
 	<h2 class="Framework" style="text-align: left;">Framework</h2>
 	<div style="text-align: center;">
 		<img width=800 src="framework.png">
 	</div>
 		<p>
-			Framework. (a) During training, cropped image and masked point cloud from Task $i$ are fed into vision and geometry foundation models to extract 
+			Framework. (a) During training, cropped image and masked point cloud from Task <i>i</i> are fed into vision and geometry foundation models to extract 
 			features, which are fused into pixel-level representations and passed to a Multi-Head Pose Predictor for 6D pose regression. In parallel, 
 			the RGB image is used for task-identity inference: a subset of prompts is selected from a prompt pool via cosine similarity, combined with patch 
 			embeddings from a pre-trained encoder, and classified to produce the task ID, which determines the corresponding pose predictor. 
@@ -177,37 +160,47 @@
 		<div style="text-align: center;">
 			<img width=800 src="pseudo-code.png">
 		</div>
-		<!--
-		<p>
-			Initially, we exclusively use data from the new object to enable rapid adjustment of the network's
-			trainable parameters to suit the characteristics of the new object. After processing all new
-			object data, we evaluate network performance on memory buffer data to detect any significant drop
-			in performance on previously seen objects. If the loss value exceeds a predefined threshold,
-			indicating a decline in performance, we incorporate memory buffer data for training. Conversely,
-			if the loss value remains below the threshold, signifying retention of previously encountered
-			objects, we refrain from adding memory buffer data to training to prevent overfitting.
-		</p>
-		-->
-		Our proposed method mainly consists of two stages, at the training process, we feed the object's image crop
-		and it's corresponding point cloud data of current task into the first stage to output a pose estimation, which composed of frozen feature
-		extractors and a Multi-head pose predictor to mitigate the forgetting. Meanwhile, we feed the image crop into the second
+		<!--	
+		Our proposed method comprises two stages. In the training phase, the cropped image of the object and its 
+		corresponding point cloud data are fed into the first stage to produce a pose estimation，which composed of frozen feature
+		extractors and a Multi-head pose predictor to mitigate the forgetting. Concurrently, we feed the cropped image into the second
 		stage, which contains a prompt pool (shared memory buffer) and a classifier to identify the task identity, which will be used to determine
 		the appropriate pose predictor in the first stage during inference.
+		-->
 		<br>
 		<br>
 
-	<h2 class="Tracking results" style="text-align: left;">Qualitative results on 6Dof pose estimation continual learning</h2>
+
+	<h2 class="Tracking results" style="text-align: left;">Quantitative Results on 6Dof pose estimation continual learning </h2>
 	<div style="text-align: center;">
+		<img width=800 src="Table1.png">
+		<img width=800 src="Table2.png">
+
+	</div>
+		<p>
+			Performance comparison on the Split-Linemod and Split-YCB-Video dataset, respectively. Methods with marked † represent results obtained under the
+			task-agnostic setting where the task identity is unknown during inference, and other results are obtained under the
+			task-incremental setting. Objects with bold name are symmetric, and values with bold name indicate the best performance
+			except for the joint.
+			As a result, our method achieve a state-of-the-art compared with existing representive approach. These experimental results verify the 
+			effectiveness of our approach. Further details are provided in the paper.
+		</p>
+	<br>
+	<br>
+
+
+	<h2 class="Tracking results" style="text-align: left;">Qualitative results on 6Dof pose estimation continual learning</h2>
+	<div style="text-align: center; margin-bottom: 100px;">
 		<video width="900" controls autoplay muted loop style="vertical-align: middle;"><source src="linemod_ape.mp4" type="video/mp4" >
 		</video>
 	</div>
 
-	<div style="text-align: center;">
+	<div style="text-align: center;margin-bottom: 100px;">
 		<video width="900" controls autoplay muted loop style="vertical-align: middle;"><source src="linemod_drill.mp4" type="video/mp4" >
 		</video>
 	</div>
 
-	<div style="text-align: center;">
+	<div style="text-align: center; margin-bottom: 100px;">
 		<video width="900" controls autoplay muted loop style="vertical-align: middle;"><source src="ycb1.mp4" type="video/mp4" >
 		</video>
 	</div>

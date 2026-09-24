@@ -158,15 +158,8 @@
 
 	<h2 class="Pseudo Code" style="text-align: left;">Pseudo Code</h2>
 		<div style="text-align: center;">
-			<img width=800 src="pseudo-code.png">
+			<img width=500 src="pseudo-code.png">
 		</div>
-		<!--	
-		Our proposed method comprises two stages. In the training phase, the cropped image of the object and its 
-		corresponding point cloud data are fed into the first stage to produce a pose estimation，which composed of frozen feature
-		extractors and a Multi-head pose predictor to mitigate the forgetting. Concurrently, we feed the cropped image into the second
-		stage, which contains a prompt pool (shared memory buffer) and a classifier to identify the task identity, which will be used to determine
-		the appropriate pose predictor in the first stage during inference.
-		-->
 		<br>
 		<br>
 
@@ -178,7 +171,7 @@
 
 	</div>
 		<p>
-			Performance comparison on the Split-Linemod and Split-YCB-Video dataset, respectively. Methods with marked † represent results obtained under the
+			Performance comparison on the Split-Linemod, Split-YCB-Video, and Split-LM-O datasets, respectively. Methods with marked † represent results obtained under the
 			task-agnostic setting where the task identity is unknown during inference, and other results are obtained under the
 			task-incremental setting. Objects with bold name are symmetric, and values with bold name indicate the best performance
 			except for the joint.
